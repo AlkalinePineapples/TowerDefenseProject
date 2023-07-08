@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0hcabjf2lfhc"]
+
+[ext_resource type="Script" path="res://Towers/Arrow.gd" id="1_y5ec0"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fxm3l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vbm2"]
+size = Vector2(36, 12)
+
+[node name="Arrow" type="Area2D"]
+script = ExtResource("1_y5ec0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(36.25, 12.25)
+texture = SubResource("PlaceholderTexture2D_fxm3l")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-9.53674e-07, 0)
+scale = Vector2(1.8, 0.6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4vbm2")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

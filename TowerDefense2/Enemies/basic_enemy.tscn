@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dg5c71omfw357"]
+
+[ext_resource type="Texture2D" uid="uid://c5grpnqymw0mt" path="res://icon.svg" id="1_jxpgi"]
+[ext_resource type="Script" path="res://Enemies/basic_enemy.gd" id="1_vaqmp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uaosf"]
+size = Vector2(70, 70)
+
+[node name="BasicEnemy" type="PathFollow2D"]
+loop = false
+script = ExtResource("1_vaqmp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_jxpgi")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_uaosf")

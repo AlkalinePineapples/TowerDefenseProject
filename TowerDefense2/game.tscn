@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://c85yrvst186r6"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_5j7nt"]
+[ext_resource type="Script" path="res://SelectedTower.gd" id="2_f3krw"]
+[ext_resource type="Texture2D" uid="uid://c5grpnqymw0mt" path="res://icon.svg" id="3_tqxbe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3yj3y"]
+
+[sub_resource type="Curve2D" id="Curve2D_jqomx"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 352, 672, 0, 0, 0, 0, 352, 416, 0, 0, 0, 0, 544, 416, 0, 0, 0, 0, 544, 544, 0, 0, 0, 0, 864, 544, 0, 0, 0, 0, 864, 160, 0, 0, 0, 0, 608, 160, 0, 0, 0, 0, 608, 224, 0, 0, 0, 0, 480, 224, 0, 0, 0, 0, 480, 96, 0, 0, 0, 0, 224, 96, 0, 0, 0, 0, 224, -40)
+}
+point_count = 12
+
+[node name="Game" type="Node"]
+script = ExtResource("1_5j7nt")
+
+[node name="SelectedTower" type="Node2D" parent="."]
+script = ExtResource("2_f3krw")
+
+[node name="Sprite2D" type="Sprite2D" parent="SelectedTower"]
+modulate = Color(1, 1, 1, 0.509804)
+
+[node name="Footprint" type="Area2D" parent="SelectedTower"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectedTower/Footprint"]
+shape = SubResource("RectangleShape2D_3yj3y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ArrowButton" type="Button" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 504.0
+offset_right = 144.0
+offset_bottom = 640.0
+icon = ExtResource("3_tqxbe")
+
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="EnemyTimer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="." groups=["Obstacle"]]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Path2D" type="Path2D" parent="Area2D"]
+curve = SubResource("Curve2D_jqomx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(320, 704, 320, 384, 576, 384, 576, 512, 832, 512, 832, 192, 640, 192, 640, 256, 448, 256, 448, 128, 192, 128, 192, -64, 256, -64, 256, 64, 512, 64, 512, 192, 576, 192, 576, 128, 896, 128, 896, 576, 512, 576, 512, 448, 384, 448, 384, 704)
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+visible = false
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(320, 704, 320, 384, 576, 384, 576, 512, 832, 512, 832, 192, 640, 192, 640, 256, 448, 256, 448, 128, 192, 128, 192, -64, 256, -64, 256, 64, 512, 64, 512, 192, 576, 192, 576, 128, 896, 128, 896, 576, 512, 576, 512, 448, 384, 448, 384, 704)
+
+[connection signal="area_entered" from="SelectedTower/Footprint" to="SelectedTower" method="_on_footprint_area_entered"]
+[connection signal="area_exited" from="SelectedTower/Footprint" to="SelectedTower" method="_on_footprint_area_exited"]
+[connection signal="pressed" from="CanvasLayer/ArrowButton" to="SelectedTower" method="_on_arrow_button_pressed"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
