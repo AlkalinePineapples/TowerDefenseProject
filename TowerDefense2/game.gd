@@ -11,7 +11,7 @@ var wave = 0:
 
 var mobs_spawn_left = 0
 var wave_mobs = [05,06,10,15,20,40,00]
-var mob_type = [01,02,01,02,01,01,01]
+var mob_type = [01,01,01,01,01,01,01]
 var kills = 0:
 	get:
 		return kills
@@ -19,7 +19,7 @@ var kills = 0:
 		kills = value
 		if kills == wave_mobs[wave - 1]:
 			$WaveTimer.start()
-			$CanvasLayer/WaveTime.visible = true
+
 var mob
 var MobInstance
 var ATower = preload("res://Towers/arrow_tower.tscn")
